@@ -1,13 +1,13 @@
 import { Text, View, StyleSheet } from "react-native";
 import { Link } from 'expo-router';
 
-export default function Index() {
+export default function AboutScreen() {
   return (
     <View style={styles.container}> 
-      <Text style={styles.text}>Página inicial</Text>
-      <Link href="/about" style={styles.button}>
-      Ir para página sobre nós
-      </Link>
+      <Text style={styles.text}>Sobre nós</Text>
+      <Link href="/(tabs)/" style={styles.button}>
+  Ir para página inicial
+</Link>
     </View>
   );
 }
@@ -22,7 +22,7 @@ justifyContent: 'center',
   text: {
     color: 'white'
   },
-    button: {
+  button: {
       fontSize: 20,
       textDecorationLine: 'underline',
       color: '#fff',

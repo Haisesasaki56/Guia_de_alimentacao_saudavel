@@ -1,14 +1,16 @@
 import { Text, View, StyleSheet } from "react-native";
-import { Link } from 'expo-router';
+import { Link, Stack } from 'expo-router';
 
-export default function Index() {
+export default function NotFoundScreen() {
   return (
-    <View style={styles.container}> 
-      <Text style={styles.text}>Página inicial</Text>
-      <Link href="/about" style={styles.button}>
-      Ir para página sobre nós
-      </Link>
+   <>
+   <Stack.Screen options={{ title: 'Oops! Página não encontrada' }} />
+   <View style={styles.container}>
+    <Link href="/index" style={styles.button}>
+    Ir para a Página inicial
+    </Link>
     </View>
+   </>
   );
 }
 
@@ -19,9 +21,7 @@ backgroundColor: '#1cc024ff',
 alignItems: 'center',
 justifyContent: 'center',
   },
-  text: {
-    color: 'white'
-  },
+
     button: {
       fontSize: 20,
       textDecorationLine: 'underline',
