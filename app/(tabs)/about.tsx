@@ -1,9 +1,9 @@
-import { Text, View, StyleSheet } from "react-native";
-import { Link } from 'expo-router';
+import { Link } from "expo-router";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function AboutScreen() {
   return (
-    <View style={styles.container}> 
+    <View style={styles.container}>
       <Text style={styles.text}>Sobre nós</Text>
       <Link href="/(tabs)/" style={styles.button}>
   Ir para página inicial
@@ -14,17 +14,17 @@ export default function AboutScreen() {
 
 const styles = StyleSheet.create({
   container: {
-flex: 1,
-backgroundColor: '#1cc024ff',
-alignItems: 'center',
-justifyContent: 'center',
+    flex: 1,
+    backgroundColor: "#1cc024ff",
+    alignItems: "center",
+    justifyContent: "center",
   },
   text: {
-    color: 'white'
+    color: "white",
   },
   button: {
-      fontSize: 20,
-      textDecorationLine: 'underline',
-      color: '#fff',
-    },
+    fontSize: 20,
+    textDecorationLine: "underline",
+    color: "#fff",
+  },
 });
