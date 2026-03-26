@@ -7,12 +7,12 @@ export default function App () {
 
     return (
         <View style={styles.container}>
-          <Text style={styles.titulo}>Lista de Tarefas </Text>
+          <Text style={styles.titulo}>Tabela Nutricional </Text>
 
         <View style={styles.inputContainer}>
             <TextInput
                 style={styles.input}
-                placeholder="Digite uma tarefa..."
+                placeholder="Digite um alimento..."
                 value={novaTarefa}
                 onChangeText={setNovaTarefa}
                 />
@@ -36,7 +36,7 @@ export default function App () {
 }
 
 const styles = StyleSheet.create({
-    container: {flex: 1, padding: 20, backgroundColor: '#f4f4f4'},
+    container: {flex: 1, padding: 20, backgroundColor: '#2f9c38ff'},
     titulo: {fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 20},
     inputContainer: {flexDirection: 'row', marginBottom: 10},
     input: {flex: 1, borderWidth: 1, borderColor: '#ccc', padding: 10, borderRadius: 5, marginRight: 10},

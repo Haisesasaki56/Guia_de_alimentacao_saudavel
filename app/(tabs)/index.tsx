@@ -1,32 +1,70 @@
-import { Text, View, StyleSheet } from 'react-native';
-import { Link } from 'expo-router';
-import { Image } from 'expo-image';
+import * as ImagePicker from "expo-image-picker";
+import { useState } from "react";
+import { StyleSheet, View } from "react-native";
 
-const PlaceholderImage = require('@/assets/images/background-image.png');
+import Button from "@/components/Button";
+import ImageViewer from "@/components/ImageViewer";
+
+const PlaceholderImage = require("@/assets/images/background-image.png");
 
 export default function Index() {
+  const [selectedImage, setSelectedImage] = useState<string | undefined>(
+    undefined,
+  );
+
+  const pickImageAsync = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri);
+    } else {
+      alert("Voce não selecionou nenhuma imagem");
+    }
+  };
+
   return (
-    <View style={styles.container}> 
-     <View style={styles.imageContainer}>
-      <Image source={PlaceholderImage} style={styles.image} />
-     </View>
+    <View style={styles.container}>
+      <View style={styles.imageContainer}>
+        <ImageViewer
+          imgSource={PlaceholderImage}
+          selectedImage={selectedImage}
+        />
+      </View>
+
+      <View style={styles.footerContainer}>
+        {/* 2. Conectando a função ao botão com onPress */}
+        <Button
+          theme="primary"
+          label="Escolha uma foto"
+          onPress={pickImageAsync}
+        />
+
+        {/* Adicionei o onPress aqui também se quiser que eles façam algo */}
+        <Button
+          label="Usar esta foto"
+          onPress={() => alert("Foto selecionada!")}
+        />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-flex: 1,
-backgroundColor: '#1cc024ff',
-alignItems: 'center',
+    flex: 1,
+    backgroundColor: "#2f9c38ff",
+    alignItems: "center",
   },
   imageContainer: {
     flex: 1,
+    paddingTop: 58,
   },
-  imagem: {
-    width: 320,
-    height: 440,
-    borderRadius: 18,
+  footerContainer: {
+    flex: 1 / 3,
+    alignItems: "center",
   },
 });
-  
