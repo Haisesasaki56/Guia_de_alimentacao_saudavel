@@ -6,8 +6,8 @@ export default function AboutScreen() {
     <View style={styles.container}>
       <Text style={styles.text}>Sobre nós</Text>
       <Link href="/(tabs)/" style={styles.button}>
-  Ir para página inicial
-</Link>
+        Ir para página inicial
+      </Link>
     </View>
   );
 }
@@ -15,15 +15,17 @@ export default function AboutScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#2f9c38ff",
+    backgroundColor: "#25292e",
     alignItems: "center",
     justifyContent: "center",
   },
   text: {
     color: "white",
+    fontSize: 18,
+    marginBottom: 10,
   },
   button: {
-    fontSize: 20,
+    fontSize: 16,
     textDecorationLine: "underline",
     color: "#fff",
   },
