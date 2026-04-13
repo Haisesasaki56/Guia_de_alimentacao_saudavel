@@ -8,7 +8,9 @@ import ImageViewer from "@/components/ImageViewer";
 const PlaceholderImage = require("../../assets/images/background-image.jpg");
 
 export default function Index() {
-  const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
+  const [selectedImage, setSelectedImage] = useState<string | undefined>(
+    undefined,
+  );
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -51,7 +53,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#25292e", 
+    backgroundColor: "#25292e",
     alignItems: "center",
   },
   imageContainer: {
@@ -61,6 +63,6 @@ const styles = StyleSheet.create({
   footerContainer: {
     flex: 1 / 3,
     alignItems: "center",
-    justifyContent: "center", 
+    justifyContent: "center",
   },
 });
