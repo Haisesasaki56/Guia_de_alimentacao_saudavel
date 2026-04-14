@@ -1,59 +1,55 @@
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import Octicons from "@expo/vector-icons/Octicons";
-import { Tabs } from "expo-router";
+import { Ionicons } from '@expo/vector-icons';
+import { Tabs } from 'expo-router';
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#f1ee29ff",
+        tabBarActiveTintColor: '#ffd33d',
         headerStyle: {
-          backgroundColor: "#444950ff",
+          backgroundColor: '#25292e',
         },
         headerShadowVisible: false,
-        headerTintColor: "#fff",
+        headerTintColor: '#fff',
         tabBarStyle: {
-          backgroundColor: "#444950ff",
+          backgroundColor: '#25292e',
         },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Página inicial",
+          title: 'Home',
           tabBarIcon: ({ color, focused }) => (
-            <Octicons
-              name={focused ? "home-fill" : "home"}
-              color={color}
-              size={24}
-            />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="about"
-        options={{
-          title: "Sobre nós",
-          tabBarIcon: ({ color, focused }) => (
-            <Octicons
-              name={focused ? "question" : "globe"}
-              color={color}
-              size={24}
-            />
+            <Ionicons name={focused ? 'home-sharp' : 'home-outline'} color={color} size={24} />
           ),
         }}
       />
       <Tabs.Screen
         name="listaAlimentos"
         options={{
-          title: "Tabela Nutricional",
+          title: 'Alimentos',
           tabBarIcon: ({ color, focused }) => (
-            <MaterialCommunityIcons
-              name={focused ? "food-fork-drink" : "food-fork-drink"}
-              color={color}
-              size={24}
-            />
+            <Ionicons name={focused ? 'fast-food' : 'fast-food-outline'} color={color} size={24} />
+          ),
+        }}
+      />
+      {/* Nova tela de IMC */}
+      <Tabs.Screen
+        name="imc"
+        options={{
+          title: 'IMC',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'calculator' : 'calculator-outline'} color={color} size={24} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="about"
+        options={{
+          title: 'Sobre',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'information-circle-sharp' : 'information-circle-outline'} color={color} size={24} />
           ),
         }}
       />
