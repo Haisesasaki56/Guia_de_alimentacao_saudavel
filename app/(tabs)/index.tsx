@@ -1,37 +1,43 @@
-import { useState, useRef, useEffect } from "react";
-import { ImageSourcePropType, StyleSheet, View, Platform } from "react-native";
+import domtoimage from "dom-to-image";
 import * as ImagePicker from "expo-image-picker";
+import { useEffect, useRef, useState } from "react";
+import { ImageSourcePropType, Platform, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import * as MediaLibrary from 'expo-media-library';
-import { captureRef } from 'react-native-view-shot';
-import domtoimage from 'dom-to-image';
+import { captureRef } from "react-native-view-shot";
 
 import Button from "@/components/Button";
-import ImageViewer from "@/components/ImageViewer";
-import IconButton from "@/components/IconButton";
 import CircleButton from "@/components/CircleButton";
-import EmojiPicker from "@/components/EmojiPicker";
 import EmojiList from "@/components/EmojiList";
+import EmojiPicker from "@/components/EmojiPicker";
 import EmojiSticker from "@/components/EmojiSticker";
+import IconButton from "@/components/IconButton";
+import ImageViewer from "@/components/ImageViewer";
 
 const PlaceholderImage = require("../../assets/images/background-image.jpg");
 
 export default function Index() {
-  const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
+  const [selectedImage, setSelectedImage] = useState<string | undefined>(
+    undefined,
+  );
   const [showAppOptions, setShowAppOptions] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [pickedEmoji, setPickedEmoji] = useState<ImageSourcePropType | undefined>(undefined);
-  
+  const [pickedEmoji, setPickedEmoji] = useState<
+    ImageSourcePropType | undefined
+  >(undefined);
+  const [status, setStatus] = useState<any>(null);
+
   const imageRef = useRef<any>(null);
 
-  const [status, requestPermission] = MediaLibrary.usePermissions();
-
-  // Correção Principal: Pedido de permissão envelopado no useEffect para evitar quebras no ciclo de vida do React
+  // Pede permissão apenas no Celular (Android / iOS)
   useEffect(() => {
-    if (status === null) {
-      requestPermission();
+    if (Platform.OS !== "web") {
+      (async () => {
+        const MediaLibrary = await import("expo-media-library");
+        const permission = await MediaLibrary.requestPermissionsAsync();
+        setStatus(permission);
+      })();
     }
-  }, [status]);
+  }, []);
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -62,8 +68,10 @@ export default function Index() {
   };
 
   const onSaveImageAsync = async () => {
-    if (Platform.OS !== 'web') {
+    if (Platform.OS !== "web") {
       try {
+        const MediaLibrary = await import("expo-media-library");
+
         const localUri = await captureRef(imageRef, {
           height: 440,
           quality: 1,
@@ -71,7 +79,7 @@ export default function Index() {
 
         await MediaLibrary.saveToLibraryAsync(localUri);
         if (localUri) {
-          alert('Saved!');
+          alert("Imagem salva com sucesso!");
         }
       } catch (e) {
         console.log(e);
@@ -84,8 +92,8 @@ export default function Index() {
           height: 443,
         });
 
-        let link = document.createElement('a');
-        link.download = 'sticker-smash.jpeg';
+        let link = document.createElement("a");
+        link.download = "sticker-smash.jpeg";
         link.href = dataUrl;
         link.click();
       } catch (e) {
@@ -101,7 +109,9 @@ export default function Index() {
           imgSource={PlaceholderImage}
           selectedImage={selectedImage}
         />
-        {pickedEmoji && <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />}
+        {pickedEmoji && (
+          <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />
+        )}
       </View>
 
       {showAppOptions ? (
@@ -109,7 +119,11 @@ export default function Index() {
           <View style={styles.optionsRow}>
             <IconButton icon="refresh" label="Reset" onPress={onReset} />
             <CircleButton onPress={onAddSticker} />
-            <IconButton icon="save-alt" label="Save" onPress={onSaveImageAsync} />
+            <IconButton
+              icon="save-alt"
+              label="Save"
+              onPress={onSaveImageAsync}
+            />
           </View>
         </View>
       ) : (
@@ -121,7 +135,7 @@ export default function Index() {
           />
           <Button
             label="Usar esta foto"
-            onPress={() => setShowAppOptions(true)} 
+            onPress={() => setShowAppOptions(true)}
           />
         </View>
       )}
@@ -148,11 +162,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   optionsContainer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 80,
   },
   optionsRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    flexDirection: "row",
   },
 });
