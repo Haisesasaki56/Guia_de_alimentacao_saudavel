@@ -24,7 +24,11 @@ export default function Index() {
   const [pickedEmoji, setPickedEmoji] = useState<
     ImageSourcePropType | undefined
   >(undefined);
-  const [status, setStatus] = useState<any>(null);
+  const [, setStatus] = useState<any>(null);
+
+  // Hook de permissão da Câmera do Expo
+  const [cameraPermissionResponse, requestCameraPermission] =
+    ImagePicker.useCameraPermissions();
 
   const imageRef = useRef<any>(null);
 
@@ -51,6 +55,30 @@ export default function Index() {
       setShowAppOptions(true);
     } else {
       alert("Você não selecionou nenhuma imagem");
+    }
+  };
+
+  // Correção 1, 2, 3 e 4: Sintaxe, await e checagem de permissão ajustados
+  const takePhotoAsync = async () => {
+    let permission = cameraPermissionResponse;
+
+    if (!permission?.granted) {
+      permission = await requestCameraPermission();
+    }
+
+    if (!permission.granted) {
+      alert("Permissão de câmera necessária para tirar a foto.");
+      return;
+    }
+
+    let result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri);
+      setShowAppOptions(true);
     }
   };
 
@@ -133,6 +161,7 @@ export default function Index() {
             label="Escolha uma foto"
             onPress={pickImageAsync}
           />
+          <Button label="Tirar foto" onPress={takePhotoAsync} />
           <Button
             label="Usar esta foto"
             onPress={() => setShowAppOptions(true)}
